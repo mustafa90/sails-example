@@ -26,6 +26,9 @@ module.exports.policies = {
   AuthController: {
     '*': 'isAuthenticated',
     login: true
+  },
+  LikeController: {
+    '*': 'isAuthenticated'
   }
 
 

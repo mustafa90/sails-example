@@ -4,14 +4,20 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 module.exports = {
   index: async function(req, res) {
     try {
       const user = await User.findOne({
-        where: { id: req.param('id') },
+        where: { id: req.param("id") },
         attributes: {
-          include: ['User.username',[Sequelize.fn("COUNT", Sequelize.col("receivedLikes.recipientId")), 'numberOfLikes']]
+          include: [
+            "User.username",
+            [
+              Sequelize.fn("COUNT", Sequelize.col("receivedLikes.recipientId")),
+              "numberOfLikes"
+            ]
+          ]
         },
         include: [
           {
@@ -20,7 +26,7 @@ module.exports = {
             as: "receivedLikes" // <---- HERE
           }
         ],
-        group: ['User.id']
+        group: ["User.id"]
       });
       console.log(user);
       if (!user) {
@@ -30,7 +36,7 @@ module.exports = {
       res.status(201).send(user);
     } catch (e) {
       console.log(e);
-      res.status(400).send("Failed to get the logged in user.");
+      res.status(400).send("Failed to retrieve the user.");
     }
   },
   signup: async function(req, res) {
