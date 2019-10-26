@@ -26,6 +26,7 @@ module.exports.routes = {
   '/me/update-password': 'UserController.updatePassword',
   '/user/:id': 'UserController.index',
   '/user/:id/like': 'LikeController.likeTheUser',
+  '/user/:id/unlike': 'LikeController.unlikeTheUser',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

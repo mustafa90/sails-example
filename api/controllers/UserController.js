@@ -33,7 +33,7 @@ module.exports = {
         return res.notFound();
       }
 
-      res.status(201).send(user);
+      res.status(200).send(user);
     } catch (e) {
       console.log(e);
       res.status(400).send("Failed to retrieve the user.");
@@ -71,7 +71,7 @@ module.exports = {
         return res.notFound();
       }
 
-      res.status(201).send(user);
+      res.status(200).send(user);
     } catch (e) {
       console.log(e);
       res.status(400).send("Failed to get the logged in user.");
@@ -93,7 +93,7 @@ module.exports = {
         { password: req.body.user.password },
         { where: { id: req.user.id }, individualHooks: true }
       );
-      res.status(201).send(user);
+      res.status(200).send(user);
     } catch (e) {
       console.log(e);
       res.status(400).send("Failed to update the user.");
