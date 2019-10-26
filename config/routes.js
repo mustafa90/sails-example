@@ -27,6 +27,7 @@ module.exports.routes = {
   '/user/:id': 'UserController.index',
   '/user/:id/like': 'LikeController.likeTheUser',
   '/user/:id/unlike': 'LikeController.unlikeTheUser',
+  '/most-liked': 'UserController.mostLiked',
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

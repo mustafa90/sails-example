@@ -4,18 +4,18 @@
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 module.exports = {
   index: async function(req, res) {
     try {
       const user = await User.findOne({
-        where: { id: req.param("id") },
+        where: { id: req.param('id') },
         attributes: {
           include: [
-            "User.username",
+            'User.username',
             [
-              Sequelize.fn("COUNT", Sequelize.col("receivedLikes.recipientId")),
-              "numberOfLikes"
+              Sequelize.fn('COUNT', Sequelize.col('receivedLikes.recipientId')),
+              'numberOfLikes'
             ]
           ]
         },
@@ -23,10 +23,10 @@ module.exports = {
           {
             model: Like,
             attributes: [],
-            as: "receivedLikes" // <---- HERE
+            as: 'receivedLikes' // <---- HERE
           }
         ],
-        group: ["User.id"]
+        group: ['User.id']
       });
       console.log(user);
       if (!user) {
@@ -36,7 +36,7 @@ module.exports = {
       res.status(200).send(user);
     } catch (e) {
       console.log(e);
-      res.status(400).send("Failed to retrieve the user.");
+      res.status(400).send('Failed to retrieve the user.');
     }
   },
   signup: async function(req, res) {
@@ -48,7 +48,7 @@ module.exports = {
       res.status(201).send(user);
     } catch (e) {
       console.log(e);
-      res.status(400).send("Failed to create user.");
+      res.status(400).send('Failed to create user.');
     }
   },
   me: async function(req, res) {
@@ -58,11 +58,11 @@ module.exports = {
         include: [
           {
             model: Like,
-            as: "receivedLikes" // <---- HERE
+            as: 'receivedLikes' // <---- HERE
           },
           {
             model: Like,
-            as: "sentLikes" // <---- HERE
+            as: 'sentLikes' // <---- HERE
           }
         ]
       });
@@ -74,18 +74,18 @@ module.exports = {
       res.status(200).send(user);
     } catch (e) {
       console.log(e);
-      res.status(400).send("Failed to get the logged in user.");
+      res.status(400).send('Failed to get the logged in user.');
     }
   },
   updatePassword: async function(req, res) {
     if (!req.body.user || !req.body.user.password) {
-      res.status(400).send("Invalid request body. Missing user parameter.");
+      res.status(400).send('Invalid request body. Missing user parameter.');
     }
     if (!req.body.user.password) {
       res
         .status(400)
         .send(
-          "Invalid request body. Missing password parameter inside the user body."
+          'Invalid request body. Missing password parameter inside the user body.'
         );
     }
     try {
@@ -96,7 +96,38 @@ module.exports = {
       res.status(200).send(user);
     } catch (e) {
       console.log(e);
-      res.status(400).send("Failed to update the user.");
+      res.status(400).send('Failed to update the user.');
     }
-  }
+  },
+
+  mostLiked: async function(req, res) {
+    try {
+      const users = await User.findAll({
+        attributes: {
+          include: [
+            'User.username',
+            [
+              Sequelize.fn('COUNT', Sequelize.col('receivedLikes.recipientId')),
+              'numberOfLikes'
+            ]
+          ]
+        },
+        include: [
+          {
+            model: Like,
+            attributes: [],
+            as: 'receivedLikes' // <---- HERE
+          }
+        ],
+        group: ['User.id'],
+        order: [[Sequelize.col('numberOfLikes'), 'DESC']]
+
+      });
+      console.log(users);
+      res.status(200).send(users);
+    } catch (e) {
+      console.log(e);
+      res.status(400).send('Failed to retrieve the users.');
+    }
+  },
 };

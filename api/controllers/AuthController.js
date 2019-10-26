@@ -5,8 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const jwtSecret = sails.config.secrets.jwtSecret;
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
       where: { username: req.body.username }
     });
     console.log(user);
-    if (!user) return res.notFound();
+    if (!user) {return res.notFound();}
 
     const isPasswordValid = await bcrypt.compare(
       req.body.password,
