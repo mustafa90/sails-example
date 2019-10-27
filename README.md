@@ -1,15 +1,15 @@
 # povio-test-users
 
-a [Sails v1](https://sailsjs.com) application
+Example of Sails API based on the sequelize ORM. Used JWT for the authentication. 
+On the database level Postgres DB used. 
+DB config is stored in the _config/datastores.js_
+
+To start application just type: `node app.js.`
 
 
 ### Links
 
-+ [Sails framework documentation](https://sailsjs.com/get-started)
-+ [Version notes / upgrading](https://sailsjs.com/documentation/upgrading)
-+ [Deployment tips](https://sailsjs.com/documentation/concepts/deployment)
-+ [Community support options](https://sailsjs.com/support)
-+ [Professional / enterprise options](https://sailsjs.com/enterprise)
+
 
 
 ### Version info
